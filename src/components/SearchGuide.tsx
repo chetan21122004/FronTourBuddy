@@ -14,16 +14,17 @@ interface Guide {
   description: string;
   profilePicture: any;
   coverImage: any;
+
 }
 
-const GuideCardSearch: React.FC<{ guide: Guide }> = ({ guide }) => (
+const GuideCardSearch: React.FC<{ guide: Guide, navigation: any }> = ({ guide, navigation }) => (
   <View className="card pb-2 w-[320px] flex  border-2 bg-gray-50 border-gray-400 overflow-hidden rounded-3xl m-2">
     {/* Guide Image */}
 
     <View className="image">
       <Image
-        style={{ height: 150, width: 315 }}
-        className="rounded-t-3xl bg-cover"
+        style={{ height: 150, width: 350 }}
+        className="rounded-t-3xl bg-cover  "
         source={guide.coverImage}
       />
     </View>
@@ -66,17 +67,19 @@ const GuideCardSearch: React.FC<{ guide: Guide }> = ({ guide }) => (
     <Text className=" pl-3 m-1 font-medium mb-2 w-11/12 text-wrap text-gray-500">{guide.description}</Text>
 
     {/* Book Now Button */}
-    <TouchableOpacity className="rounded-3xl flex h-11 bg-[#FACC15] text-white items-center justify-center mx-4">
-      <Text className="text-xl color-white font-medium">Book Now</Text>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('GuideProfile', { guide })}
+      className="rounded-3xl flex h-11 bg-[#FACC15] text-white items-center justify-center mx-4">
+      <Text className="text-xl color-white font-medium" >Book Now</Text>
     </TouchableOpacity>
   </View>
 );
 
-const GuideList: React.FC<{ guides: Guide[] }> = ({ guides }) => (
+const GuideList: React.FC<{ guides: Guide[], navigation: any }> = ({ guides, navigation }) => (
   <FlatList
     data={guides}
     keyExtractor={(item) => item.id}
-    renderItem={({ item }) => <GuideCardSearch guide={item} />}
+    renderItem={({ item }) => <GuideCardSearch guide={item} navigation={navigation} />}
     showsVerticalScrollIndicator={false}
     ListHeaderComponent={
       <Text className=' ml-4 text-xl font-medium'>
@@ -86,7 +89,11 @@ const GuideList: React.FC<{ guides: Guide[] }> = ({ guides }) => (
   />
 );
 
-const SearchGuide: React.FC = () => {
+interface GuideNav {
+
+  navigation: any;
+}
+const SearchGuide: React.FC<GuideNav> = ({ navigation }) => {
 
   const apiResponse: Guide[] = [
     {
@@ -199,7 +206,7 @@ const SearchGuide: React.FC = () => {
 
   return (
     <View className=' items-center'>
-      <GuideList guides={apiResponse} />
+      <GuideList guides={apiResponse} navigation={navigation} />
     </View>
   )
 

@@ -125,7 +125,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <View className="absolute w-16 h-16 items-center justify-center bottom-32 right-9 bg-yellow-400 p-4  rounded-full shadow-black shadow-lg ">
           <Text className="text-white text-center  text-2xl font-bold">Ai</Text>
         </View>
-        <NavbarBtm selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <NavbarBtm selectedTab={selectedTab} setSelectedTab={setSelectedTab} navigation={navigation} />
     </SafeAreaView>
   );
 }

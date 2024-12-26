@@ -28,7 +28,7 @@ type SearchScreenProps = {
 
 const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [selectedTab, setSelectedTab] = useState('home'); // Default selected tab
+  const [selectedTab, setSelectedTab] = useState('search'); // Default selected tab
  
 
 
@@ -123,7 +123,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
             <View className=''>
                 {/* < SearchGuide/> */}
 
-                <SearchGuide/>
+                <SearchGuide navigation={navigation}/>
 
             </View>
             </View>
@@ -131,7 +131,7 @@ const SearchScreen: React.FC<SearchScreenProps> = ({ navigation }) => {
 
 
         </View>
-        <NavbarBtm selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <NavbarBtm selectedTab={selectedTab} setSelectedTab={setSelectedTab} navigation={navigation}/>
 
       </SafeAreaView>
     </GestureHandlerRootView>

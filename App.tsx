@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
+import GuideProfileScreen from './src/screens/GuideProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const App: React.FC = () => {
           name="Search" 
           component={SearchScreen} 
           options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="GuideProfile" 
+          component={GuideProfileScreen} 
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
     </NavigationContainer>
