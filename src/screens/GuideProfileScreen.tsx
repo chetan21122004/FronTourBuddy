@@ -12,20 +12,22 @@ interface GuideProfileProps {
 }
 const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
     const [selectedTab, setSelectedTab] = useState('explore'); // Default selected tab
-
-    // const { guide } = route.params;
-    const guide =
-    {
-        id: "g-0701",
-        name: "Arjun Mehta",
-        rating: 4.7,
-        reviews: 120,
-        pricePerHour: 350,
-        languages: ["English", "Hindi"],
-        description: "Experienced in heritage and cultural tours.",
-        profilePicture: require('../../assets/guideDp1.png'),
-        coverImage: require('../../assets/guide1.png'),
-    }
+    const [type, setType] = useState('online'); // Default selected tab
+    const [subType, setsubType] = useState(''); // Default selected tab
+    
+    const { guide } = route.params;
+    // const guide =
+    // {
+    //     id: "g-0701",
+    //     name: "Arjun Mehta",
+    //     rating: 4.7,
+    //     reviews: 120,
+    //     pricePerHour: 350,
+    //     languages: ["English", "Hindi"],
+    //     description: "Experienced in heritage and cultural tours.",
+    //     profilePicture: require('../../assets/guideDp1.png'),
+    //     coverImage: require('../../assets/guide1.png'),
+    // }
 
 
 
@@ -97,18 +99,18 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
                     <View className=" mainOptions flex-row items-center justify-evenly my-3">
 
 
-                        <TouchableOpacity onPressIn={() => setSelectedTab('online')} className=" items-center w-5/12    ">
+                        <TouchableOpacity onPressIn={() => setType('online')} className=" items-center w-5/12    ">
                             <Text className={` text-2xl rounded-3xl p-2 w-full text-center shadow-black shadow-lg border border-gray-300
-                     ${selectedTab === 'online' ? 'color-white bg-yellow-400 ' : 'text-black bg-gray-100'}`}
+                     ${type === 'online' ? 'color-white bg-yellow-400 ' : 'text-black bg-gray-100'}`}
                             >
                                 Online
                             </Text>
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity onPressIn={() => setSelectedTab('offline')} className=" items-center w-5/12    ">
+                        <TouchableOpacity onPressIn={() => setType('offline')} className=" items-center w-5/12    ">
                             <Text className={` text-2xl rounded-3xl p-2 w-full text-center shadow-black shadow-lg border border-gray-300
-                     ${selectedTab === 'offline' ? 'color-white bg-yellow-400 ' : 'text-black bg-gray-100'}`}
+                     ${type === 'offline' ? 'color-white bg-yellow-400 ' : 'text-black bg-gray-100'}`}
                             >
                                 Offline
                             </Text>
@@ -120,14 +122,14 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
 
                     <View className="justify-evenly my-4">
                         <TouchableOpacity
-                            onPress={() => setSelectedTab('option1')}
+                            onPress={() => setsubType('instant')}
                         >
                             <View className=" px-2 py-5 border bg-white border-gray-200 shadow-black shadow-lg rounded-xl mx-4 ">
 
                                 <View className="flex-row w-full   items-center">
 
                                     <View className={`w-[15px] h-[15px]  rounded-full border border-gray-400 mr-5
-                                ${selectedTab === 'option1' ? 'bg-yellow-400' : 'bg-gray-100'}`} />
+                                ${subType === 'instant' ? 'bg-yellow-400' : 'bg-gray-100'}`} />
                                     <FontAwesome6 name="bolt" size={16} color="#F5BB1B" />
                                     <Text className="ml-2 text-2xl font-semibold ">Instant Guide</Text>
                                     <Text className=" absolute right-2  font-semibold text-yellow-500 text-2xl">
@@ -136,7 +138,7 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
                                 </View>
 
                                 <View className={`h-7
-                                ${selectedTab === 'option1' ? 'flex' : 'hidden'}
+                                ${subType === 'instant' ? 'flex' : 'hidden'}
                                 `}>
                                     <Text>chetu</Text>
                                 </View>
