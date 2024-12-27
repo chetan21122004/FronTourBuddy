@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList ,Image} from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput, FlatList, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Fontisto from '@expo/vector-icons/Fontisto';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Feather from '@expo/vector-icons/Feather';
-import Octicons from '@expo/vector-icons/Octicons';
+import { Fontisto, FontAwesome, Feather, Octicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import NavbarBtm from '../components/NavbarBtm';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

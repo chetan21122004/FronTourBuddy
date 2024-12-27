@@ -1,14 +1,10 @@
 import { View, Image, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import NavbarBtm from "../components/NavbarBtm";
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp  } from '@react-navigation/native';
 import { useState } from "react";
-import Feather from '@expo/vector-icons/Feather';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Octicons from '@expo/vector-icons/Octicons';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { Picker } from '@react-native-picker/picker';
+import { Feather, FontAwesome5, Octicons, FontAwesome6, AntDesign, Ionicons } from '@expo/vector-icons';
+
+import { DateTimePicker } from "../components/DateTimePicker";
 
 interface GuideProfileProps {
     navigation: NavigationProp<any>;
@@ -17,10 +13,32 @@ interface GuideProfileProps {
 const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
     const [selectedTab, setSelectedTab] = useState('explore'); // Default selected tab
     const [type, setType] = useState('online'); // Default selected tab
-    const [subType, setsubType] = useState(''); // Default selected tab
+    const [subType, setSubType] = useState(''); // Default selected tab
     const [showDatePicker, setShowDatePicker] = useState(false); // State to control date picker visibility
     const [scheduledDate, setScheduledDate] = useState(new Date()); // State to hold the selected date
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+    const bookedDates = [
+        new Date(2025, 1 - 1, 3),
+        new Date(2024, 12 - 1, 30),
+    ];
+
+    const availableDates = [
+        new Date(2024, 12 - 1, 29),
+        new Date(2024, 12 - 1, 31),
+    ];
+
+    const handleDateTimeSelect = (date: Date) => {
+        console.log('Selected date and time:', date);
+        // Handle the selected date and time
+    };
+    // Example data - replace with your actual data
+
+    const handleDateSelect = (date: Date) => {
+        setSelectedDate(date);
+        setShowCalendar(false);
+    }
     // const { guide } = route.params;
     const guide =
     {
@@ -83,7 +101,7 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
                 className=" h-full bg-gray-50  "
             >
 
-                <View className="pb-8" >
+                <View className="pb-3" >
 
 
 
@@ -140,13 +158,13 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
 
                     <View className="RadioOptions justify-evenly flex gap-y-3 my-4">
                         <TouchableOpacity
-                            onPress={() => setsubType('instant')}
+                            onPress={() => setSubType('instant')}
                         >
                             <View className=" px-2 py-5 border bg-white border-gray-200  rounded-xl mx-4 ">
                                 <View className="flex-row w-full   items-center">
 
                                     <FontAwesome6 name="bolt" size={17} color="#F5BB1B" />
-                                    <Text className="ml-2 text-2xl font-semibold ">Instant Guide</Text>
+                                    <Text className="ml-2 text-2xl color-gray-500 font-semibold ">Instant Guide</Text>
                                     <Text className=" absolute right-12  font-semibold text-yellow-500 text-[20px]">
                                         ₹{guide.pricePerHour + (type === 'offline' ? 100 : 0)}/tour
                                     </Text>
@@ -167,13 +185,16 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
 
 
                         {/* Schedule */}
-                        <TouchableOpacity
-                            onPress={() => setsubType('scheduled')}
-                        >
-                            <View className=" px-2 py-5 border bg-white border-gray-200  rounded-xl mx-4 ">
+
+
+
+                        <View className=" px-2 py-5 border bg-white border-gray-200  rounded-xl mx-4 ">
+                            <TouchableOpacity
+                                onPress={() => setSubType('scheduled')}
+                            >
                                 <View className="flex-row w-full   items-center">
                                     <AntDesign name="clockcircle" size={16} color="#F5BB1B" />
-                                    <Text className="ml-2 text-2xl font-semibold ">Schedule Guide</Text>
+                                    <Text className="ml-2 text-2xl color-gray-500 font-semibold ">Schedule Guide</Text>
                                     <Text className=" absolute right-12  font-semibold text-yellow-500 text-[20px] ">
                                         ₹{guide.pricePerHour - 100 + (type === 'offline' ? 100 : 0)}/tour
                                     </Text>
@@ -183,68 +204,42 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
                                 <Text className=" ml-7 text-[15px] text-gray-500 font-semibold ">
                                     Fixed timing assistance
                                 </Text>
-                                <View className={` px-4
+                            </TouchableOpacity>
+
+
+                            <View className={` justify-center
                                 ${subType === 'scheduled' ? 'flex' : 'hidden'}
                                 `}>
-                                    <Text className="text-[14px] ml-3 text-gray-600 font-medium">
-                                        Plan your tour in advance with our Scheduled Guide service for a tailored experience!
-                                    </Text>
-                                    <TouchableOpacity onPress={() => setShowDatePicker(true)} className="mt-2">
-                                        <Text className="text-blue-500">Select Date & Time</Text>
-                                    </TouchableOpacity>
-                                    {showDatePicker && (
-                                        <View className="flex-row justify-between">
-                                            <Picker
-                                                selectedValue={scheduledDate.getMonth()}
-                                                onValueChange={(itemValue) => {
-                                                    const newDate = new Date(scheduledDate);
-                                                    newDate.setMonth(itemValue);
-                                                    setScheduledDate(newDate);
-                                                }}>
-                                                {/* Month options */}
-                                                {Array.from({ length: 12 }, (_, i) => (
-                                                    <Picker.Item key={i} label={new Date(0, i).toLocaleString('default', { month: 'long' })} value={i} />
-                                                ))}
-                                            </Picker>
-                                            <Picker
-                                                selectedValue={scheduledDate.getDate()}
-                                                onValueChange={(itemValue) => {
-                                                    const newDate = new Date(scheduledDate);
-                                                    newDate.setDate(itemValue);
-                                                    setScheduledDate(newDate);
-                                                }}>
-                                                {/* Date options */}
-                                                {Array.from({ length: 31 }, (_, i) => (
-                                                    <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
-                                                ))}
-                                            </Picker>
-                                            <Picker
-                                                selectedValue={scheduledDate.getHours()}
-                                                onValueChange={(itemValue) => {
-                                                    const newDate = new Date(scheduledDate);
-                                                    newDate.setHours(itemValue);
-                                                    setScheduledDate(newDate);
-                                                }}>
-                                                {/* Time options */}
-                                                {Array.from({ length: 24 }, (_, i) => (
-                                                    <Picker.Item key={i} label={`${i}:00`} value={i} />
-                                                ))}
-                                            </Picker>
-                                        </View>
+                                <Text className="text-[14px] px-4 ml-3 text-gray-600 font-medium">
+                                    Plan your tour in advance with our Scheduled Guide service for a tailored experience!
+                                </Text>
+                                <TouchableOpacity onPress={() => setShowCalendar(!showCalendar)} className="mt-2 ml-6">
+                                    <Text className="text-blue-500">Select Date & Time</Text>
+                                </TouchableOpacity>
+
+                                <View className="">
+                                    {showCalendar && (
+                                        <DateTimePicker
+                                            onSelect={handleDateTimeSelect}
+                                            bookedDates={bookedDates}
+                                            availableDates={availableDates}
+                                        />
                                     )}
                                 </View>
                             </View>
-                        </TouchableOpacity>
+                        </View>
+
 
                         {/* Vip */}
 
+
                         <TouchableOpacity
-                            onPress={() => setsubType('vip')}
+                            onPress={() => setSubType('vip')}
                         >
                             <View className=" px-2 py-5 border bg-white border-gray-200  rounded-xl mx-4 ">
                                 <View className="flex-row w-full   items-center">
                                     <FontAwesome5 name="crown" size={16} color="#F5BB1B" />
-                                    <Text className="ml-2 text-2xl font-semibold ">VIP Guide</Text>
+                                    <Text className="ml-2 text-2xl text-gray-500 font-semibold ">VIP Guide</Text>
                                     <Text className=" absolute right-12  font-semibold text-yellow-500 text-[20px]">
                                         ₹{guide.pricePerHour + 250 + (type === 'offline' ? 100 : 0)}/tour
                                     </Text>
@@ -296,13 +291,19 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
                             </View>
                         </View>
                         <View className="flex   flex-row justify-between pl-2 px-1 items-center">
-                            <Text className=" text-[15px] text-gray-500 font-semibold">
+                            <Text className=" text-[15px] text-gray-500  font-bold">
                                 Total
                             </Text>
                             <Text className=" text-[15px]"> ₹{(guide.pricePerHour + (type === 'offline' ? 100 : 0) + (subType === 'instant' ? 0 : subType === 'scheduled' ? -100 : 250)) - 150}</Text>
                         </View>
                     </View>
 
+                    <TouchableOpacity className=" items-center w-11/12 mx-auto mt-4 shadow    ">
+                        <Text className={` text-2xl rounded-2xl p-2 color-white bg-yellow-400 w-full text-center font-semibold  border border-gray-300 `}
+                        >
+                            Book Now
+                        </Text>
+                    </TouchableOpacity>
 
                 </View>
             </ScrollView>

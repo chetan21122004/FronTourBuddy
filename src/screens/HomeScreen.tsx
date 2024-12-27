@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, SafeAreaView, StatusBar, Text, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
-import Entypo from '@expo/vector-icons/Entypo';
-import Fontisto from '@expo/vector-icons/Fontisto';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Entypo, Fontisto, FontAwesome5, MaterialIcons, FontAwesome, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import GuideScroll from '../components/GuideScroll';
 import PopularAttractions from '../components/PopularAttraction';
 
-
-
 import { NavigationProp } from '@react-navigation/native';
 import NavbarBtm from '../components/NavbarBtm';
-
-
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
