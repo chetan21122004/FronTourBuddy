@@ -1,6 +1,6 @@
 import { View, Image, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import NavbarBtm from "../components/NavbarBtm";
-import { NavigationProp  } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
 import { useState } from "react";
 import { Feather, FontAwesome5, Octicons, FontAwesome6, AntDesign, Ionicons } from '@expo/vector-icons';
 
@@ -39,19 +39,19 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
         setSelectedDate(date);
         setShowCalendar(false);
     }
-    // const { guide } = route.params;
-    const guide =
-    {
-        id: "g-0701",
-        name: "Arjun Mehta",
-        rating: 4.7,
-        reviews: 120,
-        pricePerHour: 350,
-        languages: ["English", "Hindi"],
-        description: "Experienced in heritage and cultural tours.",
-        profilePicture: require('../../assets/guideDp1.png'),
-        coverImage: require('../../assets/guide1.png'),
-    }
+    const { guide } = route.params;
+    // const guide =
+    // {
+    //     id: "g-0701",
+    //     name: "Arjun Mehta",
+    //     rating: 4.7,
+    //     reviews: 120,
+    //     pricePerHour: 350,
+    //     languages: ["English", "Hindi"],
+    //     description: "Experienced in heritage and cultural tours.",
+    //     profilePicture: require('../../assets/guideDp1.png'),
+    //     coverImage: require('../../assets/guide1.png'),
+    // }
 
 
 
@@ -294,11 +294,18 @@ const GuideProfileScreen = ({ route, navigation }: GuideProfileProps) => {
                             <Text className=" text-[15px] text-gray-500  font-bold">
                                 Total
                             </Text>
-                            <Text className=" text-[15px]"> ₹{(guide.pricePerHour + (type === 'offline' ? 100 : 0) + (subType === 'instant' ? 0 : subType === 'scheduled' ? -100 : 250)) - 150}</Text>
+                            <Text className=" text-[15px]"> ₹{
+                                (guide.pricePerHour + (type === 'offline' ? 100 : 0) + (subType === 'instant' ? 0 : subType === 'scheduled' ? -100 : 250)) - 150
+                            }</Text>
                         </View>
                     </View>
 
-                    <TouchableOpacity className=" items-center w-11/12 mx-auto mt-4 shadow    ">
+                    <TouchableOpacity
+                        onPress={() => {
+                            const amt = (guide.pricePerHour + (type === 'offline' ? 100 : 0) + (subType === 'instant' ? 0 : subType === 'scheduled' ? -100 : 250)) - 150
+                            navigation.navigate('Payment', { amt });
+                        }}
+                        className=" items-center w-11/12 mx-auto mt-4 shadow    ">
                         <Text className={` text-2xl rounded-2xl p-2 color-white bg-yellow-400 w-full text-center font-semibold  border border-gray-300 `}
                         >
                             Book Now

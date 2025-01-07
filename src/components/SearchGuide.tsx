@@ -14,6 +14,7 @@ interface Guide {
   description: string;
   profilePicture: any;
   coverImage: any;
+  
 
 }
 
